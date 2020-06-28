@@ -1,8 +1,7 @@
 [org 0x7c00]
 
-mov bx, msg
-
-call print_string_function
+mov bx, 0xdab0
+call print_hex_function
 
 jmp $
 
@@ -11,6 +10,7 @@ msg: db 'Simple operation system', 0
 chart: db 't'
 
 ; functions
+; accepts a pointer to the char in [bx]
 print_char_function:
     pusha
 
@@ -21,6 +21,7 @@ print_char_function:
     popa
     ret
 
+; accepts a pointer to the string in [bx]
 print_string_function:
     pusha
     
@@ -37,6 +38,79 @@ print_string_function:
         jmp start
 
     end:
+        popa
+        ret
+
+; accepts hex value inside bx
+print_hex_function:
+    pusha
+
+    mov ah, 0x0e
+    mov al, '0'
+    int 0x10
+    mov al, 'x'
+    int 0x10
+
+    mov ax, bx
+    shr ax, 12
+    call compare_and_print
+    mov ax, bx
+    shr ax, 8
+    call compare_and_print
+    mov ax, bx
+    shr ax, 4
+    call compare_and_print
+    mov ax, bx
+    shr ax, 0
+    call compare_and_print
+    jmp end_of_print_hex_function
+
+    ; private function in function
+        compare_and_print:
+            and ax, 0x000f
+            add al, 0x30
+
+            cmp ax, 0x003a
+            je A
+            jl output
+
+            cmp ax, 0x003b
+            je B
+
+            cmp ax, 0x003c
+            je C
+
+            cmp ax, 0x003d
+            je D
+
+            cmp ax, 0x003e
+            je E
+            jg F
+
+                A:
+                    mov al, 'a'
+                    jmp output
+                B:
+                    mov al, 'b'
+                    jmp output
+                C:
+                    mov al, 'c'
+                    jmp output
+                D:
+                    mov al, 'd'
+                    jmp output
+                E:
+                    mov al, 'e'
+                    jmp output
+                F:
+                    mov al, 'f'
+
+            output:
+                mov ah, 0x0e
+                int 0x10
+                ret
+
+    end_of_print_hex_function:
         popa
         ret
 
