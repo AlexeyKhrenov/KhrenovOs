@@ -1,0 +1,8 @@
+// to run the image:
+qemu-system-x86_64 boot_sect.bin
+
+// another system:
+qemu-system-i386 boot_sect.bin
+
+// to build the image:
+nasm boot_sect.asm -f bin -o boot_sect.bin
