@@ -1,6 +1,6 @@
 [org 0x7c00]
 
-mov bx, 0xdab0
+mov bx, ss
 call print_hex_function
 
 jmp $
@@ -71,40 +71,10 @@ print_hex_function:
             add al, 0x30
 
             cmp ax, 0x003a
-            je A
             jl output
 
-            cmp ax, 0x003b
-            je B
-
-            cmp ax, 0x003c
-            je C
-
-            cmp ax, 0x003d
-            je D
-
-            cmp ax, 0x003e
-            je E
-            jg F
-
-                A:
-                    mov al, 'a'
-                    jmp output
-                B:
-                    mov al, 'b'
-                    jmp output
-                C:
-                    mov al, 'c'
-                    jmp output
-                D:
-                    mov al, 'd'
-                    jmp output
-                E:
-                    mov al, 'e'
-                    jmp output
-                F:
-                    mov al, 'f'
-
+            add al, 0x27 ; letter
+                    
             output:
                 mov ah, 0x0e
                 int 0x10
@@ -116,4 +86,3 @@ print_hex_function:
 
 times 510-($-$$) db 0
 dw 0xaa55
-
