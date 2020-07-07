@@ -1,5 +1,6 @@
+[bits 16]
 ; load 'dh' sectors from drive 'dl' into ES:BX
-disk_load:
+disk_load_function:
     pusha
     ; reading from disk requires setting specific values in all registers
     ; so we will overwrite our input parameters from 'dx'. Let's save it
