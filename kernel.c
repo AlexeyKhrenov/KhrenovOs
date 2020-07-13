@@ -10,7 +10,7 @@ int print_char(char c, int col, int row, char attr);
 
 void main() {
 
-    isr_install();
+    init_idt();
 
     char x[] = "X";
     char multiplelines[] = "This text spans multiple lines";
