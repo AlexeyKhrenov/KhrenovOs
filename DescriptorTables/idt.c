@@ -49,7 +49,35 @@ void init_idt(){
     idt_set_gate(30, isr30);
     idt_set_gate(31, isr31);
 
+    idt_set_gate(32, irq0);
+    idt_set_gate(33, irq1);
+    idt_set_gate(34, irq2);
+    idt_set_gate(35, irq3);
+    idt_set_gate(36, irq4);
+    idt_set_gate(37, irq5);
+    idt_set_gate(38, irq6);
+    idt_set_gate(39, irq7);
+    idt_set_gate(40, irq8);
+    idt_set_gate(41, irq9);
+    idt_set_gate(42, irq10);
+    idt_set_gate(43, irq11);
+    idt_set_gate(44, irq12);
+    idt_set_gate(45, irq13);
+    idt_set_gate(46, irq14);
+    idt_set_gate(47, irq15);
+
     __asm__ __volatile__("lidtl (%0)" : : "r" (&idt_ptr));
+
+    port_byte_out(0x20, 0x11);
+    port_byte_out(0xA0, 0x11);
+    port_byte_out(0x21, 0x20);
+    port_byte_out(0xA1, 0x28);
+    port_byte_out(0x21, 0x04);
+    port_byte_out(0xA1, 0x02);
+    port_byte_out(0x21, 0x01);
+    port_byte_out(0xA1, 0x01);
+    port_byte_out(0x21, 0x0);
+    port_byte_out(0xA1, 0x0);
 }
 
 static void idt_set_gate(char num, int base){

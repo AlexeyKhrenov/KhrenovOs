@@ -18,7 +18,6 @@ void main() {
     char wrong[] = "What happens when we run out of space?";
 
     clear_screen();
-    kprint_at(x, 20, 20);
 
     __asm__ __volatile__("int $3");
 }
