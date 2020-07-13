@@ -43,6 +43,34 @@ void kprint(char *message) {
     kprint_at(message, -1, -1);
 }
 
+void kprint_hex_int(int i){
+    kprint_hex_byte((i >> 24) & 0xff);
+    kprint_hex_byte((i >> 16) & 0xff);
+    kprint_hex_byte((i >> 8) & 0xff);
+    kprint_hex_byte(i & 0xff);
+}
+
+void kprint_hex_byte(char b){
+    char l = b & 0xf;
+    if(l > 9){
+        l += 0x57;
+    }
+    else{
+        l += 0x30;
+    }
+
+    char h = (b >> 4) & 0xf;
+    if(h > 9){
+        h += 0x57;
+    }
+    else{
+        h += 0x30;
+    }
+
+    print_char(h, -1, -1, WHITE_ON_BLACK);
+    print_char(l, -1, -1, WHITE_ON_BLACK);
+}
+
 
 /**********************************************************
  * Private kernel functions                               *

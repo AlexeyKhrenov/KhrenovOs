@@ -16,3 +16,6 @@ ld -o basic.bin -Ttext 0x0 --oformat binary basic.o
 ndisasm -b 32 basic.bin > basic.dis
 
 gcc -ffreestanding -fno-asynchronous-unwind-tables -c basic.c -o basic.o    
+
+objdump -j.data -s kernel.o
+
