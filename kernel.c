@@ -4,6 +4,7 @@
 #include "./util.c"
 #include "./DescriptorTables/idt.c"
 #include "./DescriptorTables/isr.c"
+#include "./drivers/keyboard.c"
 
 int get_cursor_offset();
 void set_cursor_offset(int offset);
@@ -23,5 +24,5 @@ void main() {
     kprint(wrong);
 
     asm volatile("sti");
-    init_timer(50);
+    init_keyboard();
 }
