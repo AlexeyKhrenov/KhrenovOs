@@ -1,5 +1,6 @@
 #include "./drivers/port.c"
 #include "./drivers/screen.c"
+#include "./drivers/timer.c"
 #include "./util.c"
 #include "./DescriptorTables/idt.c"
 #include "./DescriptorTables/isr.c"
@@ -19,5 +20,8 @@ void main() {
 
     clear_screen();
 
-    __asm__ __volatile__("int $3");
+    kprint(wrong);
+
+    asm volatile("sti");
+    init_timer(50);
 }

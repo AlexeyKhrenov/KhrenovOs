@@ -1,3 +1,6 @@
+#ifndef ISR_H
+#define ISR_H
+
 typedef struct __attribute__((packed)) registers
 {
    int ds;                  // Data segment selector
@@ -7,4 +10,8 @@ typedef struct __attribute__((packed)) registers
 } registers_t;
 
 typedef void (*isr_t)(registers_t);
+
+void irq_handler(registers_t regs);
 void register_interrupt_handler(char n, isr_t handler);
+
+#endif

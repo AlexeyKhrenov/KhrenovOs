@@ -8,9 +8,7 @@ idt_entry_ptr idt_ptr;
 
 void init_idt(){
     idt_ptr.limit = sizeof(idt_entry_t) * 256 - 1;
-    idt_ptr.base = (short)idt_entries; // is it the right way to get the pointer?
-
-    //memset(&idt_entries, 0, sizeof(idt_entry_t)* 256); // why do we need to set memory?
+    idt_ptr.base = (short)&idt_entries; // is it the right way to get the pointer?
 
     // todo - find size of function and change pointer accordingly
     idt_set_gate(0, isr0);
@@ -49,6 +47,17 @@ void init_idt(){
     idt_set_gate(30, isr30);
     idt_set_gate(31, isr31);
 
+    port_byte_out(0x20, 0x11);
+    port_byte_out(0xA0, 0x11);
+    port_byte_out(0x21, 0x20);
+    port_byte_out(0xA1, 0x28);
+    port_byte_out(0x21, 0x04);
+    port_byte_out(0xA1, 0x02);
+    port_byte_out(0x21, 0x01);
+    port_byte_out(0xA1, 0x01);
+    port_byte_out(0x21, 0x0);
+    port_byte_out(0xA1, 0x0); 
+
     idt_set_gate(32, irq0);
     idt_set_gate(33, irq1);
     idt_set_gate(34, irq2);
@@ -67,17 +76,6 @@ void init_idt(){
     idt_set_gate(47, irq15);
 
     __asm__ __volatile__("lidtl (%0)" : : "r" (&idt_ptr));
-
-    port_byte_out(0x20, 0x11);
-    port_byte_out(0xA0, 0x11);
-    port_byte_out(0x21, 0x20);
-    port_byte_out(0xA1, 0x28);
-    port_byte_out(0x21, 0x04);
-    port_byte_out(0xA1, 0x02);
-    port_byte_out(0x21, 0x01);
-    port_byte_out(0xA1, 0x01);
-    port_byte_out(0x21, 0x0);
-    port_byte_out(0xA1, 0x0);
 }
 
 static void idt_set_gate(char num, int base){

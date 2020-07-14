@@ -1,3 +1,6 @@
+#ifndef IDT_H
+#define IDT_H
+
 struct __attribute__((packed)) idt_entry_struct
 {
     short base_lo; // lower 16 bits of the address to jump to
@@ -71,3 +74,5 @@ extern void irq14();
 extern void irq15();
 
 void init_idt();
+
+#endif

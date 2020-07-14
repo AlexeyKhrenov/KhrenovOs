@@ -71,6 +71,11 @@ void kprint_hex_byte(char b){
     print_char(l, -1, -1, WHITE_ON_BLACK);
 }
 
+char newline[] = "\n";
+void kprint_newline(){
+    kprint(newline);
+}
+
 
 /**********************************************************
  * Private kernel functions                               *
